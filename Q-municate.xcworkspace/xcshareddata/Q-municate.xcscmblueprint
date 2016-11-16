@@ -10,7 +10,7 @@
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "A63A7A86-BD10-474D-BE04-0F227E696FD3",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "A670EF64B516360FDFADDE04B3B3446E684984BD" : "q-municate-ios\/",
+    "A670EF64B516360FDFADDE04B3B3446E684984BD" : "video_chat\/",
     "D160C3FE7B115E6635EB21EBE93000EBA4B81BC8" : "q-municate-services-ios\/",
     "7685896580551A65BF391139D591B99B273195F4" : "QMChatViewController-ios\/"
   },

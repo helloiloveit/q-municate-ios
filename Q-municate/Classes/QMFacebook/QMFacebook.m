@@ -15,7 +15,7 @@
 
 static NSString * const kQMHomeUrl = @"http://q-municate.com";
 static NSString * const kQMLogoUrl = @"https://files.quickblox.com/ic_launcher.png";
-static NSString * const kQMAppName = @"Q-municate";
+static NSString * const kQMAppName = @"videochat_test";
 static NSString * const kQMDataKey = @"data";
 
 static NSString * const kFBGraphGetPictureFormat = @"https://graph.facebook.com/%@/picture?height=100&width=100&access_token=%@";

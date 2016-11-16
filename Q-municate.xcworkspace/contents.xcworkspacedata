@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:Q-municate.xcodeproj">
+      location = "group:/Users/mac/Project/video_chat/VideoApp_Test.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">

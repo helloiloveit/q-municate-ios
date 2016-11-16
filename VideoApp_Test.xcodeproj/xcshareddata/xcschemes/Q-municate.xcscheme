@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "69D57E5118ACC11C00A9900A"
-               BuildableName = "Q-municate.app"
-               BlueprintName = "Q-municate"
-               ReferencedContainer = "container:Q-municate.xcodeproj">
+               BuildableName = "VideoApp_Test.app"
+               BlueprintName = "VideoApp_Test"
+               ReferencedContainer = "container:VideoApp_Test.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "69D57E5118ACC11C00A9900A"
-            BuildableName = "Q-municate.app"
-            BlueprintName = "Q-municate"
-            ReferencedContainer = "container:Q-municate.xcodeproj">
+            BuildableName = "VideoApp_Test.app"
+            BlueprintName = "VideoApp_Test"
+            ReferencedContainer = "container:VideoApp_Test.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -56,9 +56,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "69D57E5118ACC11C00A9900A"
-            BuildableName = "Q-municate.app"
-            BlueprintName = "Q-municate"
-            ReferencedContainer = "container:Q-municate.xcodeproj">
+            BuildableName = "VideoApp_Test.app"
+            BlueprintName = "VideoApp_Test"
+            ReferencedContainer = "container:VideoApp_Test.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -75,9 +75,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "69D57E5118ACC11C00A9900A"
-            BuildableName = "Q-municate.app"
-            BlueprintName = "Q-municate"
-            ReferencedContainer = "container:Q-municate.xcodeproj">
+            BuildableName = "VideoApp_Test.app"
+            BlueprintName = "VideoApp_Test"
+            ReferencedContainer = "container:VideoApp_Test.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
