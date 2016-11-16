@@ -81,21 +81,9 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gLv-b0-MwQ" userLabel="Logo View">
                                 <rect key="frame" x="67.5" y="136.5" width="240" height="240"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IHp-4T-p7b">
-                                        <rect key="frame" x="21" y="166" width="198" height="37.5"/>
-                                        <attributedString key="attributedText">
-                                            <fragment content="Q-MUNICATE">
-                                                <attributes>
-                                                    <color key="NSColor" red="0.12941176470588234" green="0.12941176470588234" blue="0.12941176470588234" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <font key="NSFont" size="32" name="HelveticaNeue"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                </attributes>
-                                            </fragment>
-                                        </attributedString>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your own Chat!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="942-eX-Uid">
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Your own Chat!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="942-eX-Uid">
                                         <rect key="frame" x="58.5" y="208.5" width="123" height="21.5"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <color key="textColor" red="0.0" green="0.74901960784313726" blue="0.15686274509803921" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -107,16 +95,19 @@
                                             <constraint firstAttribute="height" constant="120" id="ztn-93-spI"/>
                                         </constraints>
                                     </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Learn. Fun" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wPU-qw-mjC">
+                                        <rect key="frame" x="-22" y="147" width="284" height="57"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="29"/>
+                                        <color key="textColor" red="1" green="0.0" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="IHp-4T-p7b" firstAttribute="top" secondItem="1kf-EG-1D1" secondAttribute="bottom" constant="38" id="3Vd-hl-xDV"/>
                                     <constraint firstAttribute="width" constant="240" id="AB5-pS-BDN"/>
                                     <constraint firstAttribute="height" constant="240" id="Eah-j3-ePt"/>
                                     <constraint firstItem="1kf-EG-1D1" firstAttribute="top" secondItem="gLv-b0-MwQ" secondAttribute="top" constant="8" id="HzW-s8-jSq"/>
-                                    <constraint firstItem="IHp-4T-p7b" firstAttribute="centerX" secondItem="1kf-EG-1D1" secondAttribute="centerX" id="RmR-tY-mNv"/>
-                                    <constraint firstItem="942-eX-Uid" firstAttribute="top" secondItem="IHp-4T-p7b" secondAttribute="bottom" constant="5" id="XCe-tR-iIG"/>
                                     <constraint firstItem="1kf-EG-1D1" firstAttribute="centerX" secondItem="gLv-b0-MwQ" secondAttribute="centerX" id="cL0-Md-rim"/>
-                                    <constraint firstItem="942-eX-Uid" firstAttribute="centerX" secondItem="IHp-4T-p7b" secondAttribute="centerX" id="iex-Ee-nyW"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PHr-Vz-jdJ" userLabel="Spacer View">
@@ -228,7 +219,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mKT-ox-R94" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3550" y="-7959"/>
+            <point key="canvasLocation" x="-3551.1999999999998" y="-7959.670164917542"/>
         </scene>
         <!--Main-->
         <scene sceneID="GJ7-gp-EDB">
@@ -457,7 +448,7 @@
                             </connections>
                         </barButtonItem>
                         <view key="titleView" contentMode="scaleToFill" id="Fd7-vL-gvv">
-                            <rect key="frame" x="110.5" y="5.5" width="154" height="33"/>
+                            <rect key="frame" x="111" y="6" width="154" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="License Agreement" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cWw-Es-Hkk">

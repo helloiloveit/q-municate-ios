@@ -81,7 +81,7 @@ typedef NS_ENUM(NSUInteger, QMFeedbackSelection) {
     [REMailComposeViewController present:^(REMailComposeViewController *mailVC) {
         
         @strongify(self);
-        NSString *recipient = @"q-municate@quickblox.com";
+        NSString *recipient = @"hello.i.love.it@gmail.com";
         
         NSString *subject = self.titles[self.selectedIndexPath.row];
         NSString *messageBody = [self deviceInfo];

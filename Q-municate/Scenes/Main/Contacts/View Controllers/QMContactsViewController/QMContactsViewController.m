@@ -68,7 +68,7 @@ QMUsersServiceDelegate
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
     // search implementation
-    [self configureSearch];
+  //  [self configureSearch];
     
     // setting up data source
     [self configureDataSources];

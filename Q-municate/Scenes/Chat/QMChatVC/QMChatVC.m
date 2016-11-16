@@ -213,7 +213,7 @@ NYTPhotosViewControllerDelegate
         [self updateOpponentOnlineStatus];
         
         // configuring call buttons for opponent
-        [self configureCallButtons];
+        //[self configureCallButtons];
         
         // handling typing status
         [self.chatDialog setOnUserIsTyping:^(NSUInteger userID) {
