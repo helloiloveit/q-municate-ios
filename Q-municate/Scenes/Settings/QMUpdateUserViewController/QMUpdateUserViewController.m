@@ -98,7 +98,8 @@ static const NSUInteger kQMFullNameFieldMinLength = 3;
     self.textField.placeholder = title;
     self.cachedValue =
     self.textField.text = text;
-    self.bottomText = bottomText;
+    //self.bottomText = bottomText;
+    self.bottomText = @"Info about your language level";
 }
 
 #pragma mark - Actions
