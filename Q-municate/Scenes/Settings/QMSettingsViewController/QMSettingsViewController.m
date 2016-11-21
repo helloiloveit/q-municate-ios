@@ -67,12 +67,15 @@ NYTPhotosViewControllerDelegate
 
 @property (weak, nonatomic) BFTask *subscribeTask;
 @property (weak, nonatomic) BFTask *logoutTask;
+@property (weak, nonatomic) IBOutlet UIPickerView *picker;
 
 @property (strong, nonatomic) NSMutableIndexSet *hiddenUserInfoCells;
 
 @end
 
 @implementation QMSettingsViewController
+
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -100,6 +103,7 @@ NYTPhotosViewControllerDelegate
     // subscribe to delegates
     [QMCore instance].currentProfile.delegate = self;
     self.avatarImageView.delegate = self;
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -108,6 +112,15 @@ NYTPhotosViewControllerDelegate
     // smooth rows deselection
     [self qm_smoothlyDeselectRowsForTableView:self.tableView];
 }
+
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+
 
 - (void)configureUserData:(QBUUser *)userData {
     

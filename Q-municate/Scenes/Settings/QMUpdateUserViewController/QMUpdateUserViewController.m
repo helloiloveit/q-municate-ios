@@ -17,16 +17,19 @@ static const NSUInteger kQMFullNameFieldMinLength = 3;
 
 @interface QMUpdateUserViewController ()
 
-@property (weak, nonatomic) IBOutlet UITextField *textField;
+
 
 @property (copy, nonatomic) NSString *keyPath;
 @property (copy, nonatomic) NSString *cachedValue;
 @property (copy, nonatomic) NSString *bottomText;
 @property (weak, nonatomic) BFTask *task;
+@property (weak, nonatomic) IBOutlet UIPickerView *picker;
 
 @end
 
 @implementation QMUpdateUserViewController
+
+NSArray *pickerData;
 
 - (void)dealloc {
     
@@ -48,13 +51,39 @@ static const NSUInteger kQMFullNameFieldMinLength = 3;
     
     // configure appearance
     [self configureAppearance];
+    
+    
+    // Connect data
+    self.picker.dataSource = self;
+    self.picker.delegate = self;
+    
+    self.navigationItem.rightBarButtonItem.enabled = YES;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    [self.textField becomeFirstResponder];
+    //[self.textField becomeFirstResponder];
 }
+
+// The number of columns of data
+- (int)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+// The number of rows of data
+- (int)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    return pickerData.count;
+}
+
+// The data to return for the row and component (column) that's being passed in
+- (NSString*)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    return pickerData[row];
+}
+
 
 - (void)configureAppearance {
     
@@ -74,6 +103,7 @@ static const NSUInteger kQMFullNameFieldMinLength = 3;
                                  title:NSLocalizedString(@"QM_STR_EMAIL", nil)
                                   text:currentUser.email
                             bottomText:NSLocalizedString(@"QM_STR_EMAIL_DESCRIPTION", nil)];
+            pickerData = @[@"English",@"Vietnamese"];
             break;
             
         case QMUpdateUserFieldStatus:
@@ -81,6 +111,7 @@ static const NSUInteger kQMFullNameFieldMinLength = 3;
                                  title:NSLocalizedString(@"QM_STR_STATUS", nil)
                                   text:currentUser.status
                             bottomText:NSLocalizedString(@"QM_STR_STATUS_DESCRIPTION", nil)];
+            pickerData = @[@"Beginner",@"Intermediate", @"Fluent"];
             break;
             
         case QMUpdateUserFieldNone:
@@ -95,9 +126,9 @@ static const NSUInteger kQMFullNameFieldMinLength = 3;
     
     self.keyPath = keyPath;
     self.title =
-    self.textField.placeholder = title;
+   // self.textField.placeholder = title;
     self.cachedValue =
-    self.textField.text = text;
+  //  self.textField.text = text;
     //self.bottomText = bottomText;
     self.bottomText = @"Info about your language level";
 }
@@ -110,10 +141,85 @@ static const NSUInteger kQMFullNameFieldMinLength = 3;
         // task is in progress
         return;
     }
+    // Huy add. to get value of from picker
+    NSInteger row;
+    NSString *strPrintRepeat;
+    row = [self.picker selectedRowInComponent:0];
+    strPrintRepeat = [pickerData objectAtIndex:row];
     
     QBUpdateUserParameters *updateUserParams = [QBUpdateUserParameters new];
     updateUserParams.customData = [QMCore instance].currentProfile.userData.customData;
-    [updateUserParams setValue:self.textField.text forKeyPath:self.keyPath];
+    //[updateUserParams setValue:self.textField.text forKeyPath:self.keyPath];
+    [updateUserParams setValue:strPrintRepeat forKeyPath:self.keyPath];
+    
+    //huy test code
+    // Create note
+    // select record by user
+    // if not existed . create a record
+    // if existed update info
+    /*
+    QBCOCustomObject *object = [QBCOCustomObject customObject];
+    object.className = @"User_data"; // your Class name
+    
+    
+    // Object fields
+    [object.fields setObject:@"Vietnamese" forKey:@"My_Lang"];
+    [object.fields setObject:@9.1f forKey:@"rating"];
+    [object.fields setObject:@NO forKey:@"documentary"];
+    [object.fields setObject:@"fantasy" forKey:@"To_learn_lang"];
+    [object.fields setObject:@"Star Wars is an American epic space opera franchise consisting of a film series created by George Lucas." forKey:@"descriptions"];
+    
+    [QBRequest createObject:object successBlock:^(QBResponse *response, QBCOCustomObject *object) {
+        // do something when object is successfully created on a server
+    } errorBlock:^(QBResponse *response) {
+        // error handling
+        NSLog(@"Response error: %@", [response.error description]);
+    }];
+     */
+    
+    
+
+    NSMutableDictionary *getRequest = [NSMutableDictionary dictionary];
+    [getRequest setObject:@"19812866" forKey:@"user_id"];
+
+    
+    [QBRequest objectsWithClassName:@"User_data" extendedRequest:getRequest successBlock:^(QBResponse *response, NSArray *objects, QBResponsePage *page) {
+        // response processing
+        id obj = [objects objectAtIndex: 0];
+
+        QBCOCustomObject *object = [QBCOCustomObject customObject];
+        object.className = @"User_data";
+        [object.fields setObject:@"7.90" forKey:@"rating"];
+        object.ID = @"502f7c4036c9ae2163000002";
+        
+        
+        [QBRequest updateObject:object successBlock:^(QBResponse *response, QBCOCustomObject *object) {
+            // object updated
+        } errorBlock:^(QBResponse *response) {
+            // error handling
+            NSLog(@"Response error: %@", [response.error description]);
+        }];
+    } errorBlock:^(QBResponse *response) {
+        // error handling
+        NSLog(@"Response error: %@", [response.error description]);
+    }];
+    
+    
+    /*
+NSString *id_info = [[NSString alloc] initWithFormat:@"%d", 123];
+    QBCOCustomObject *object = [QBCOCustomObject customObject];
+    object.className = @"User_data";
+    [object.fields setObject:@"7.90" forKey:@"rating"];
+    object.ID = @"502f7c4036c9ae2163000002";
+    
+    
+    [QBRequest updateObject:object successBlock:^(QBResponse *response, QBCOCustomObject *object) {
+        // object updated
+    } errorBlock:^(QBResponse *response) {
+        // error handling
+        NSLog(@"Response error: %@", [response.error description]);
+    }];
+    */
     
     [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
     
@@ -136,37 +242,12 @@ static const NSUInteger kQMFullNameFieldMinLength = 3;
 
 - (IBAction)textFieldEditingChanged:(UITextField *)__unused sender {
     
-    if (![self updateAllowed]) {
-        
-        self.navigationItem.rightBarButtonItem.enabled = NO;
-        return;
-    }
-    
     self.navigationItem.rightBarButtonItem.enabled = YES;
 }
 
 #pragma mark - Helpers
 
-- (BOOL)updateAllowed {
-    
-    if (self.updateUserField == QMUpdateUserFieldStatus) {
-        
-        return YES;
-    }
-    
-    NSCharacterSet *whiteSpaceSet = [NSCharacterSet whitespaceCharacterSet];
-    if ([self.textField.text stringByTrimmingCharactersInSet:whiteSpaceSet].length < kQMFullNameFieldMinLength) {
-        
-        return NO;
-    }
-    
-    if ([self.textField.text isEqualToString:self.cachedValue]) {
-        
-        return NO;
-    }
-    
-    return YES;
-}
+
 
 #pragma mark - UITableViewDataSource
 

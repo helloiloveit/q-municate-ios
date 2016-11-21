@@ -16,7 +16,7 @@ typedef NS_ENUM(NSUInteger, QMUpdateUserField) {
     QMUpdateUserFieldStatus
 };
 
-@interface QMUpdateUserViewController : UITableViewController
+@interface QMUpdateUserViewController : UITableViewController<UIPickerViewDataSource, UIPickerViewDelegate>
 
 @property (assign, nonatomic) QMUpdateUserField updateUserField;
 
