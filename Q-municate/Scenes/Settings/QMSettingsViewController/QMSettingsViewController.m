@@ -28,6 +28,8 @@ typedef NS_ENUM(NSUInteger, QMSettingsSection) {
     
     QMSettingsSectionFullName,
     QMSettingsSectionStatus,
+    QMSettingsSectionTargetLanguage,
+    QMSettingsSectionMyLanguage,
     QMSettingsSectionUserInfo,
     QMSettingsSectionExtra,
     QMSettingsSectionSocial,
@@ -64,10 +66,13 @@ NYTPhotosViewControllerDelegate
 @property (weak, nonatomic) IBOutlet UILabel *phoneLabel;
 @property (weak, nonatomic) IBOutlet UILabel *emailLabel;
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
+@property (weak, nonatomic) IBOutlet UILabel *languageLabel;
+@property (weak, nonatomic) IBOutlet UILabel *myLanguageLabel;
+
 
 @property (weak, nonatomic) BFTask *subscribeTask;
 @property (weak, nonatomic) BFTask *logoutTask;
-@property (weak, nonatomic) IBOutlet UIPickerView *picker;
+
 
 @property (strong, nonatomic) NSMutableIndexSet *hiddenUserInfoCells;
 
@@ -131,7 +136,8 @@ NYTPhotosViewControllerDelegate
                            completedBlock:nil];
     
     self.fullNameLabel.text = userData.fullName;
-    
+    self.languageLabel.text = @"english";
+    self.myLanguageLabel.text = @"vietnamese";
     if (userData.phone.length > 0) {
         
         self.phoneLabel.text = userData.phone;
@@ -247,7 +253,13 @@ NYTPhotosViewControllerDelegate
         case QMSettingsSectionStatus:
             [self performSegueWithIdentifier:kQMSceneSegueUpdateUser sender:@(QMUpdateUserFieldStatus)];
             break;
-            
+        case QMSettingsSectionTargetLanguage:
+            [self performSegueWithIdentifier:kQMSceneSegueUpdateUser sender:@(QMUpdateUserFieldEmail)];
+            break;
+        case QMSettingsSectionMyLanguage:
+            [self performSegueWithIdentifier:kQMSceneSegueUpdateUser sender:@(QMUpdateUserFieldEmail)];
+            break;
+        
         case QMSettingsSectionUserInfo:
             
             switch (indexPath.row) {
@@ -310,7 +322,30 @@ NYTPhotosViewControllerDelegate
         
         return headerView;
     }
-    
+    if (section == QMSettingsSectionTargetLanguage) {
+        
+        QMTableSectionHeaderView *headerView = [[QMTableSectionHeaderView alloc]
+                                                initWithFrame:CGRectMake(0,
+                                                                         0,
+                                                                         CGRectGetWidth(tableView.frame),
+                                                                         kQMStatusSectionHeaderHeight)];
+        headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        headerView.title = [NSLocalizedString(@"Your language", nil) uppercaseString];;
+        
+        return headerView;
+    }
+    if (section == QMSettingsSectionMyLanguage) {
+        
+        QMTableSectionHeaderView *headerView = [[QMTableSectionHeaderView alloc]
+                                                initWithFrame:CGRectMake(0,
+                                                                         0,
+                                                                         CGRectGetWidth(tableView.frame),
+                                                                         kQMStatusSectionHeaderHeight)];
+        headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        headerView.title = [NSLocalizedString(@"My language", nil) uppercaseString];;
+        
+        return headerView;
+    }
     return [super tableView:tableView viewForHeaderInSection:section];
 }
 
@@ -322,6 +357,14 @@ NYTPhotosViewControllerDelegate
     }
     
     if (section == QMSettingsSectionStatus) {
+        
+        return kQMStatusSectionHeaderHeight;
+    }
+    if (section == QMSettingsSectionTargetLanguage) {
+        
+        return kQMStatusSectionHeaderHeight;
+    }
+    if (section == QMSettingsSectionMyLanguage) {
         
         return kQMStatusSectionHeaderHeight;
     }

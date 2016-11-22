@@ -33,11 +33,11 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="420"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mQr-un-WzV" id="cUp-X3-4V4">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="420"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="419"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TbN-aD-Lc2">
-                                            <rect key="frame" x="99" y="40" width="177" height="64.5"/>
+                                            <rect key="frame" x="98.5" y="40" width="178" height="65"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="TbN-aD-Lc2" secondAttribute="height" multiplier="173:63" id="y8X-CM-ILi"/>
                                             </constraints>
@@ -48,7 +48,7 @@ out here.</string>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="m_empty_dialogs" translatesAutoresizingMaskIntoConstraints="NO" id="mob-8S-GOu">
-                                            <rect key="frame" x="98.5" y="155.5" width="178" height="264"/>
+                                            <rect key="frame" x="99" y="156" width="178" height="264"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" relation="lessThanOrEqual" constant="178" id="8z4-EB-ZS8"/>
                                                 <constraint firstAttribute="width" secondItem="mob-8S-GOu" secondAttribute="height" multiplier="29:43" id="KIQ-BZ-quZ"/>
@@ -252,7 +252,7 @@ out here.</string>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="rRp-nU-Jp0" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Room " image="qm-tb-contacts" id="fYc-rl-dnk"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="jYx-TX-49w" customClass="QMNavigationBar">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="jYx-TX-49w" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -276,7 +276,7 @@ out here.</string>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="8Yq-BL-cvM" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="HIstory" image="qm-tb-chats" id="l6Z-lD-4Rv"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Irs-ba-SJb" customClass="QMNavigationBar">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Irs-ba-SJb" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -376,7 +376,7 @@ out here.</string>
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="smd-oe-3SF" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="gyT-Uq-WjS" customClass="QMNavigationBar">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="gyT-Uq-WjS" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -394,7 +394,7 @@ out here.</string>
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="grf-7O-2S3" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="uaF-lR-4Sh" customClass="QMNavigationBar">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="uaF-lR-4Sh" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

@@ -81,7 +81,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gLv-b0-MwQ" userLabel="Logo View">
                                 <rect key="frame" x="67.5" y="136.5" width="240" height="240"/>
                                 <subviews>
-                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your own Chat!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="942-eX-Uid">
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Your own Chat!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="942-eX-Uid">
                                         <rect key="frame" x="58.5" y="208.5" width="123" height="21.5"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
@@ -95,7 +95,7 @@
                                             <constraint firstAttribute="height" constant="120" id="ztn-93-spI"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Learn. Fun" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wPU-qw-mjC">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Learn. Fun" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wPU-qw-mjC">
                                         <rect key="frame" x="-22" y="147" width="284" height="57"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="29"/>
@@ -110,7 +110,7 @@
                                     <constraint firstItem="1kf-EG-1D1" firstAttribute="centerX" secondItem="gLv-b0-MwQ" secondAttribute="centerX" id="cL0-Md-rim"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PHr-Vz-jdJ" userLabel="Spacer View">
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PHr-Vz-jdJ" userLabel="Spacer View">
                                 <rect key="frame" x="0.0" y="376.5" width="0.0" height="136.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="26" id="4D4-iK-Bof"/>
@@ -126,7 +126,7 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="azN-hq-Hr4" userLabel="Spacer View 2">
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="azN-hq-Hr4" userLabel="Spacer View 2">
                                 <rect key="frame" x="0.0" y="0.0" width="0.0" height="136.5"/>
                             </view>
                         </subviews>

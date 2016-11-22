@@ -61,6 +61,7 @@ static NSString * const kQMFacebookIDField = @"id";
                                                               if (success) {
                                                                   
                                                                   [self chainFacebookConnect];
+                                                                  // to add the algorithm to check User_data record here
                                                               }
                                                           }];
                                                       }]];

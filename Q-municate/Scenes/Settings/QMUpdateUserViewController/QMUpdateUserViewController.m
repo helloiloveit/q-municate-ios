@@ -185,12 +185,12 @@ NSArray *pickerData;
     
     [QBRequest objectsWithClassName:@"User_data" extendedRequest:getRequest successBlock:^(QBResponse *response, NSArray *objects, QBResponsePage *page) {
         // response processing
-        id obj = [objects objectAtIndex: 0];
-
+        QBCOCustomObject *obj = [objects objectAtIndex: 0];
+        
         QBCOCustomObject *object = [QBCOCustomObject customObject];
         object.className = @"User_data";
         [object.fields setObject:@"7.90" forKey:@"rating"];
-        object.ID = @"502f7c4036c9ae2163000002";
+        object.ID = obj.ID;
         
         
         [QBRequest updateObject:object successBlock:^(QBResponse *response, QBCOCustomObject *object) {
