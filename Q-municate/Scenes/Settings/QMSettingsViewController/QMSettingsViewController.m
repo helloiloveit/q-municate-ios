@@ -114,6 +114,27 @@ NYTPhotosViewControllerDelegate
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    
+    // Update data that is not in profile
+    NSMutableDictionary *getRequest = [NSMutableDictionary dictionary];
+    [getRequest setObject:@"19812866" forKey:@"user_id"];
+    
+    
+    [QBRequest objectsWithClassName:@"User_data" extendedRequest:getRequest successBlock:^(QBResponse *response, NSArray *objects, QBResponsePage *page) {
+        // response processing
+        QBCOCustomObject *obj = [objects objectAtIndex: 0];
+        NSLog(@"print value %@",obj.fields[@"My_lang"]);
+        NSDictionary *temp = obj.fields;
+        // to cast to new object type to get data
+        self.languageLabel.text = temp[@"To_learn_lang"];
+        self.myLanguageLabel.text = temp[@"My_Lang"];
+        
+    } errorBlock:^(QBResponse *response) {
+        // error handling
+        NSLog(@"Response error: %@", [response.error description]);
+    }];
+    
+    
     // smooth rows deselection
     [self qm_smoothlyDeselectRowsForTableView:self.tableView];
 }
@@ -136,8 +157,11 @@ NYTPhotosViewControllerDelegate
                            completedBlock:nil];
     
     self.fullNameLabel.text = userData.fullName;
-    self.languageLabel.text = @"english";
-    self.myLanguageLabel.text = @"vietnamese";
+    
+    //get data
+    
+   
+ 
     if (userData.phone.length > 0) {
         
         self.phoneLabel.text = userData.phone;
@@ -254,10 +278,10 @@ NYTPhotosViewControllerDelegate
             [self performSegueWithIdentifier:kQMSceneSegueUpdateUser sender:@(QMUpdateUserFieldStatus)];
             break;
         case QMSettingsSectionTargetLanguage:
-            [self performSegueWithIdentifier:kQMSceneSegueUpdateUser sender:@(QMUpdateUserFieldEmail)];
+            [self performSegueWithIdentifier:kQMSceneSegueUpdateUser sender:@(QMUpdateUserFieldTargetLanguage)];
             break;
         case QMSettingsSectionMyLanguage:
-            [self performSegueWithIdentifier:kQMSceneSegueUpdateUser sender:@(QMUpdateUserFieldEmail)];
+            [self performSegueWithIdentifier:kQMSceneSegueUpdateUser sender:@(QMUpdateUserFieldMyLanguage)];
             break;
         
         case QMSettingsSectionUserInfo:
