@@ -17,6 +17,7 @@ static const NSUInteger kQMFullNameFieldMinLength = 3;
 
 @interface QMUpdateUserViewController ()
 
+@property (weak, nonatomic) IBOutlet UITextField *textField;
 
 
 @property (copy, nonatomic) NSString *keyPath;
@@ -63,7 +64,7 @@ NSArray *pickerData;
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    //[self.textField becomeFirstResponder];
+    [self.textField becomeFirstResponder];
 }
 
 // The number of columns of data
@@ -99,14 +100,16 @@ NSArray *pickerData;
             break;
             
         case QMUpdateUserFieldEmail:
+            [self.picker setHidden:YES];
             [self configureWithKeyPath:@keypath(QBUUser.new, email)
                                  title:NSLocalizedString(@"QM_STR_EMAIL", nil)
                                   text:currentUser.email
                             bottomText:NSLocalizedString(@"QM_STR_EMAIL_DESCRIPTION", nil)];
-            pickerData = @[@"English",@"Vietnamese"];
+    
             break;
             
         case QMUpdateUserFieldStatus:
+            [self.textField setHidden:YES];
             [self configureWithKeyPath:@keypath(QBUUser.new, status)
                                  title:NSLocalizedString(@"QM_STR_STATUS", nil)
                                   text:currentUser.status
@@ -114,6 +117,22 @@ NSArray *pickerData;
             pickerData = @[@"Beginner",@"Intermediate", @"Fluent"];
             break;
             
+        case QMUpdateUserFieldTargetLanguage:
+            [self.textField setHidden:YES];
+            [self configureWithKeyPath:@keypath(QBUUser.new, status)
+                                 title:NSLocalizedString(@"QM_STR_STATUS", nil)
+                                  text:currentUser.status
+                            bottomText:NSLocalizedString(@"QM_STR_STATUS_DESCRIPTION", nil)];
+            pickerData = @[@"English",@"Vietnamese"];
+            break;
+        case QMUpdateUserFieldMyLanguage:
+            [self.textField setHidden:YES];
+            [self configureWithKeyPath:@keypath(QBUUser.new, status)
+                                 title:NSLocalizedString(@"QM_STR_STATUS", nil)
+                                  text:currentUser.status
+                            bottomText:NSLocalizedString(@"QM_STR_STATUS_DESCRIPTION", nil)];
+            pickerData = @[@"English",@"Vietnamese"];
+            break;
         case QMUpdateUserFieldNone:
             break;
     }
@@ -126,9 +145,9 @@ NSArray *pickerData;
     
     self.keyPath = keyPath;
     self.title =
-   // self.textField.placeholder = title;
+    self.textField.placeholder = title;
     self.cachedValue =
-  //  self.textField.text = text;
+    self.textField.text = text;
     //self.bottomText = bottomText;
     self.bottomText = @"Info about your language level";
 }
@@ -146,12 +165,15 @@ NSArray *pickerData;
     NSString *strPrintRepeat;
     row = [self.picker selectedRowInComponent:0];
     strPrintRepeat = [pickerData objectAtIndex:row];
-    
+
+if (self.updateUserField == QMUpdateUserFieldStatus)
+{
     QBUpdateUserParameters *updateUserParams = [QBUpdateUserParameters new];
     updateUserParams.customData = [QMCore instance].currentProfile.userData.customData;
     //[updateUserParams setValue:self.textField.text forKeyPath:self.keyPath];
     [updateUserParams setValue:strPrintRepeat forKeyPath:self.keyPath];
     
+
     //huy test code
     // Create note
     // select record by user
@@ -176,33 +198,6 @@ NSArray *pickerData;
         NSLog(@"Response error: %@", [response.error description]);
     }];
      */
-    
-    
-
-    NSMutableDictionary *getRequest = [NSMutableDictionary dictionary];
-    [getRequest setObject:@"19812866" forKey:@"user_id"];
-
-    
-    [QBRequest objectsWithClassName:@"User_data" extendedRequest:getRequest successBlock:^(QBResponse *response, NSArray *objects, QBResponsePage *page) {
-        // response processing
-        QBCOCustomObject *obj = [objects objectAtIndex: 0];
-        
-        QBCOCustomObject *object = [QBCOCustomObject customObject];
-        object.className = @"User_data";
-        [object.fields setObject:@"7.90" forKey:@"rating"];
-        object.ID = obj.ID;
-        
-        
-        [QBRequest updateObject:object successBlock:^(QBResponse *response, QBCOCustomObject *object) {
-            // object updated
-        } errorBlock:^(QBResponse *response) {
-            // error handling
-            NSLog(@"Response error: %@", [response.error description]);
-        }];
-    } errorBlock:^(QBResponse *response) {
-        // error handling
-        NSLog(@"Response error: %@", [response.error description]);
-    }];
     
     
     /*
@@ -239,12 +234,116 @@ NSString *id_info = [[NSString alloc] initWithFormat:@"%d", 123];
         return nil;
     }];
 }
+if (self.updateUserField == QMUpdateUserFieldTargetLanguage)
+{
+    
+    NSMutableDictionary *getRequest = [NSMutableDictionary dictionary];
+    [getRequest setObject:@"19812866" forKey:@"user_id"];
+    
+    [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+    
+    __weak UINavigationController *navigationController = self.navigationController;
+    @weakify(self);
+    [QBRequest objectsWithClassName:@"User_data" extendedRequest:getRequest successBlock:^(QBResponse *response, NSArray *objects, QBResponsePage *page) {
+        // response processing
+        QBCOCustomObject *obj = [objects objectAtIndex: 0];
+        
+        QBCOCustomObject *object = [QBCOCustomObject customObject];
+        object.className = @"User_data";
+        [object.fields setObject:strPrintRepeat forKey:@"To_learn_lang"];
+        object.ID = obj.ID;
+        
+        
+        [QBRequest updateObject:object successBlock:^(QBResponse *response, QBCOCustomObject *object) {
+            // object updated
+        } errorBlock:^(QBResponse *response) {
+            // error handling
+            NSLog(@"Response error: %@", [response.error description]);
+        }];
+        
+        @strongify(self);
+        [navigationController dismissNotificationPanel];
+
+        [self.navigationController popViewControllerAnimated:YES];
+        
+        
+    } errorBlock:^(QBResponse *response) {
+        // error handling
+        NSLog(@"Response error: %@", [response.error description]);
+    }];
+    
+}
+if (self.updateUserField == QMUpdateUserFieldMyLanguage)
+{
+    
+        NSMutableDictionary *getRequest = [NSMutableDictionary dictionary];
+        [getRequest setObject:@"19812866" forKey:@"user_id"];
+
+    [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+    
+    __weak UINavigationController *navigationController = self.navigationController;
+    @weakify(self);
+    [QBRequest objectsWithClassName:@"User_data" extendedRequest:getRequest successBlock:^(QBResponse *response, NSArray *objects, QBResponsePage *page) {
+        // response processing
+        QBCOCustomObject *obj = [objects objectAtIndex: 0];
+        
+        QBCOCustomObject *object = [QBCOCustomObject customObject];
+        object.className = @"User_data";
+        [object.fields setObject:strPrintRepeat forKey:@"My_Lang"];
+        object.ID = obj.ID;
+        
+        
+        [QBRequest updateObject:object successBlock:^(QBResponse *response, QBCOCustomObject *object) {
+            // object updated
+        } errorBlock:^(QBResponse *response) {
+            // error handling
+            NSLog(@"Response error: %@", [response.error description]);
+        }];
+        
+        @strongify(self);
+        [navigationController dismissNotificationPanel];
+        
+        [self.navigationController popViewControllerAnimated:YES];
+        
+    } errorBlock:^(QBResponse *response) {
+        // error handling
+        NSLog(@"Response error: %@", [response.error description]);
+    }];
+    
+}
+
+}
 
 - (IBAction)textFieldEditingChanged:(UITextField *)__unused sender {
+    if (![self updateAllowed]) {
+        
+        self.navigationItem.rightBarButtonItem.enabled = NO;
+        return;
+    }
     
     self.navigationItem.rightBarButtonItem.enabled = YES;
 }
 
+- (BOOL)updateAllowed {
+    
+    if (self.updateUserField == QMUpdateUserFieldStatus) {
+        
+        return YES;
+    }
+    
+    NSCharacterSet *whiteSpaceSet = [NSCharacterSet whitespaceCharacterSet];
+    if ([self.textField.text stringByTrimmingCharactersInSet:whiteSpaceSet].length < kQMFullNameFieldMinLength) {
+        
+        return NO;
+    }
+    
+    if ([self.textField.text isEqualToString:self.cachedValue]) {
+        
+        return NO;
+    }
+    
+    return YES;
+}
 #pragma mark - Helpers
 
 

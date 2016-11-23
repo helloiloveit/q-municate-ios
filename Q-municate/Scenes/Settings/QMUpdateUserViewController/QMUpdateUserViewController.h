@@ -13,7 +13,10 @@ typedef NS_ENUM(NSUInteger, QMUpdateUserField) {
     QMUpdateUserFieldNone,
     QMUpdateUserFieldFullName,
     QMUpdateUserFieldEmail,
-    QMUpdateUserFieldStatus
+    QMUpdateUserFieldStatus,
+    QMUpdateUserFieldTargetLanguage,
+    QMUpdateUserFieldMyLanguage
+    
 };
 
 @interface QMUpdateUserViewController : UITableViewController<UIPickerViewDataSource, UIPickerViewDelegate>

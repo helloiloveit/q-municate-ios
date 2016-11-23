@@ -52,6 +52,7 @@ QMUsersServiceDelegate
  *  Data sources
  */
 @property (strong, nonatomic) QMContactsDataSource *dataSource;
+@property (strong, nonatomic) QMContactsDataSource *dataSource_temp;
 @property (strong, nonatomic) QMContactsSearchDataSource *contactsSearchDataSource;
 @property (strong, nonatomic) QMGlobalSearchDataSource *globalSearchDataSource;
 
@@ -207,7 +208,22 @@ QMUsersServiceDelegate
 - (void)updateItemsFromContactList {
     
     NSArray *friends = [[QMCore instance].contactManager friends];
-    [self.dataSource replaceItems:friends];
+    
+    //test
+    
+    QBGeneralResponsePage *page = [QBGeneralResponsePage responsePageWithCurrentPage:1 perPage:10];
+    
+    [QBRequest usersForPage:page successBlock:^(QBResponse *response, QBGeneralResponsePage *pageInformation, NSArray *users) {
+        // Successful response contains current page infromation + list of users
+        [self.dataSource_temp replaceItems:users];
+        [self.dataSource replaceItems:users];
+        [self.tableView reloadData];
+    } errorBlock:^(QBResponse *response) {
+        // Handle error
+    }];
+    
+    NSLog(@"updateItemsFromContactList");
+    //[self.dataSource replaceItems:friends];
 }
 
 #pragma mark - UITableViewDelegate
