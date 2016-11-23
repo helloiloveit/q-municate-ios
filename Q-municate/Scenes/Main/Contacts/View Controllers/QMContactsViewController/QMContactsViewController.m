@@ -210,7 +210,19 @@ QMUsersServiceDelegate
     NSArray *friends = [[QMCore instance].contactManager friends];
     
     //test
+    NSMutableDictionary *filters = [NSMutableDictionary dictionary];
+    filters[@"My_lang"] = @"english";
     
+    [QBRequest usersWithExtendedRequest:filters page:[QBGeneralResponsePage responsePageWithCurrentPage:1 perPage:10] successBlock:^(QBResponse *response, QBGeneralResponsePage *page, NSArray *users) {
+        // Request succeeded
+        [self.dataSource_temp replaceItems:users];
+        [self.dataSource replaceItems:users];
+        [self.tableView reloadData];
+    } errorBlock:^(QBResponse *response) {
+        // Handle error
+    }];
+    
+    /*
     QBGeneralResponsePage *page = [QBGeneralResponsePage responsePageWithCurrentPage:1 perPage:10];
     
     [QBRequest usersForPage:page successBlock:^(QBResponse *response, QBGeneralResponsePage *pageInformation, NSArray *users) {
@@ -222,6 +234,7 @@ QMUsersServiceDelegate
         // Handle error
     }];
     
+     */
     NSLog(@"updateItemsFromContactList");
     //[self.dataSource replaceItems:friends];
 }
