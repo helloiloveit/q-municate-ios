@@ -238,7 +238,12 @@ if (self.updateUserField == QMUpdateUserFieldTargetLanguage)
 {
     
     NSMutableDictionary *getRequest = [NSMutableDictionary dictionary];
-    [getRequest setObject:@"19812866" forKey:@"user_id"];
+    //NSInteger *id_info = [QMCore instance].currentProfile.userData.ID;
+
+    NSString *id_info = [[NSString alloc] initWithFormat:@"%d", [QMCore instance].currentProfile.userData.ID];
+    
+    
+    [getRequest setObject:id_info forKey:@"user_id"];
     
     [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
     
@@ -277,7 +282,9 @@ if (self.updateUserField == QMUpdateUserFieldMyLanguage)
 {
     
         NSMutableDictionary *getRequest = [NSMutableDictionary dictionary];
-        [getRequest setObject:@"19812866" forKey:@"user_id"];
+        NSString *id_info = [[NSString alloc] initWithFormat:@"%d", [QMCore instance].currentProfile.userData.ID];
+    
+        [getRequest setObject:id_info forKey:@"user_id"];
 
     [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
     

@@ -210,18 +210,35 @@ QMUsersServiceDelegate
     NSArray *friends = [[QMCore instance].contactManager friends];
     
     //test
+    NSMutableDictionary *getRequest = [NSMutableDictionary dictionary];
     NSMutableDictionary *filters = [NSMutableDictionary dictionary];
-    filters[@"My_lang"] = @"english";
     
-    [QBRequest usersWithExtendedRequest:filters page:[QBGeneralResponsePage responsePageWithCurrentPage:1 perPage:10] successBlock:^(QBResponse *response, QBGeneralResponsePage *page, NSArray *users) {
-        // Request succeeded
-        [self.dataSource_temp replaceItems:users];
-        [self.dataSource replaceItems:users];
-        [self.tableView reloadData];
+    NSString *id_info = [[NSString alloc] initWithFormat:@"%d", [QMCore instance].currentProfile.userData.ID];
+    //filters[@"My_lang"] = @"english";
+
+    [QBRequest objectsWithClassName:@"User_data" extendedRequest:getRequest successBlock:^(QBResponse *response, NSArray *objects, QBResponsePage *page) {
+        // response processing
+        QBCOCustomObject *obj = [objects objectAtIndex: 0];
+        
+        NSString *my_lang_info = obj.fields[@"To_learn_lang"];
+        filters[@"My_lang"] = my_lang_info;
+ 
+        // Now query for user
+        
+        [QBRequest usersWithExtendedRequest:filters page:[QBGeneralResponsePage responsePageWithCurrentPage:1 perPage:10] successBlock:^(QBResponse *response, QBGeneralResponsePage *page, NSArray *users) {
+            // Request succeeded
+            [self.dataSource replaceItems:users];
+            [self.tableView reloadData];
+        } errorBlock:^(QBResponse *response) {
+            // Handle error
+        }];
+        
     } errorBlock:^(QBResponse *response) {
-        // Handle error
+        // error handling
+        NSLog(@"Response error: %@", [response.error description]);
     }];
     
+
     /*
     QBGeneralResponsePage *page = [QBGeneralResponsePage responsePageWithCurrentPage:1 perPage:10];
     

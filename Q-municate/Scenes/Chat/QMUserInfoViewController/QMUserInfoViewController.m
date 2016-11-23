@@ -181,15 +181,19 @@ NYTPhotosViewControllerDelegate
 - (void)updateUserIteractions {
     
     BOOL isFriend = [[QMCore instance].contactManager isFriendWithUserID:self.user.ID];
+    
+    [self.hiddenSections addIndex:QMUserInfoSectionRemoveContact];
     if (isFriend) {
         
         [self.hiddenSections addIndex:QMUserInfoSectionAddAction];
+        
     }
     else {
         
-        [self.hiddenSections addIndex:QMUserInfoSectionContactInteractions];
+        //[self.hiddenSections addIndex:QMUserInfoSectionContactInteractions];
         
         BOOL isAwaitingForApproval = [[QMCore instance].contactManager isContactListItemExistentForUserWithID:self.user.ID];
+        /*
         if (isAwaitingForApproval) {
             
             [self.hiddenSections addIndex:QMUserInfoSectionAddAction];
@@ -197,8 +201,11 @@ NYTPhotosViewControllerDelegate
         else {
             
             [self.hiddenSections addIndex:QMUserInfoSectionRemoveContact];
-        }
+        }*/
+        [self.hiddenSections addIndex:QMUserInfoSectionAddAction];
+      
     }
+    
 }
 
 - (void)updateLastSeen {
