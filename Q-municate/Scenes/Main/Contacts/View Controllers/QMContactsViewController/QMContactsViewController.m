@@ -212,10 +212,18 @@ QMUsersServiceDelegate
     //test
     NSMutableDictionary *getRequest = [NSMutableDictionary dictionary];
     NSMutableDictionary *filters = [NSMutableDictionary dictionary];
+    NSMutableArray *online_list = [[NSMutableArray alloc] init];
+    NSMutableArray *user_id_list = [[NSMutableArray alloc] init];
+    
     
     NSString *id_info = [[NSString alloc] initWithFormat:@"%d", [QMCore instance].currentProfile.userData.ID];
     //filters[@"My_lang"] = @"english";
+     [getRequest setObject:id_info forKey:@"user_id"];
+     
 
+    
+    
+    //Query for user with targeted language
     [QBRequest objectsWithClassName:@"User_data" extendedRequest:getRequest successBlock:^(QBResponse *response, NSArray *objects, QBResponsePage *page) {
         // response processing
         QBCOCustomObject *obj = [objects objectAtIndex: 0];
@@ -223,15 +231,97 @@ QMUsersServiceDelegate
         NSString *my_lang_info = obj.fields[@"To_learn_lang"];
         filters[@"My_lang"] = my_lang_info;
  
-        // Now query for user
+        // test with getRequest for specific language from user_data
+        [getRequest setObject:my_lang_info forKey:@"My_lang"];
+        [QBRequest objectsWithClassName:@"User_data" extendedRequest:getRequest successBlock:^(QBResponse *response, NSArray *objects, QBResponsePage *page) {
+            // response processing
+            NSLog(@"lalal");
+            //now from user_data . get user obj
+            for (id user_data_info in objects){
+                NSLog(@"user info ");
+                if ([user_data_info isKindOfClass:[QBCOCustomObject class]])
+                {
+                    // It's an NSString, do something with it...
+                    QBCOCustomObject *user_obj = user_data_info;
+                    NSLog(@"user info %d", user_obj.userID);
+                    // check online status
+                    BOOL isOnline = [[QMCore instance].contactManager isUserOnlineWithID:user_obj.userID];
+                    NSLog(@"user is online %d", isOnline);
+                    if (1)
+                    {
+                        NSString *id_info = [[NSString alloc] initWithFormat:@"%d", user_obj.userID];
+
+                        [user_id_list addObject:id_info];
+                        
+                        //[online_list addObject:user_obj];
+                    }
+                    NSLog(@"test");
+                }
+                NSLog(@"test");
+            }
+            
+            //get user list
+            for (id user_id in user_id_list)
+            {
+                [QBRequest usersWithIDs:@[user_id] page:[QBGeneralResponsePage responsePageWithCurrentPage:1 perPage:10] successBlock:^(QBResponse *response, QBGeneralResponsePage *page, NSArray *users) {
+                    // Successful response with page information and users array
+                    NSLog(@" success getting user");
+                    // add user to array to display
+                    for (id user_data in users)
+                    {
+                        if ([user_data isKindOfClass:[QBUUser class]])
+                        {
+                            QBUUser *user_info = user_data;
+                            [online_list addObject:user_info];
+                        }
+                        
+                    }
+                    [self.dataSource replaceItems:online_list];
+                    [self.tableView reloadData];
+                    
+                } errorBlock:^(QBResponse *response) {
+                    // Handle error here
+                }];
+                
+            }            
+            
+            [self.dataSource replaceItems:online_list];
+            [self.tableView reloadData];
+            
+        } errorBlock:^(QBResponse *response) {
+            // error handling
+            NSLog(@"Response error: %@", [response.error description]);
+        }];
+        //end
         
+        /*
+        
+        // Now query for user
         [QBRequest usersWithExtendedRequest:filters page:[QBGeneralResponsePage responsePageWithCurrentPage:1 perPage:10] successBlock:^(QBResponse *response, QBGeneralResponsePage *page, NSArray *users) {
             // Request succeeded
-            [self.dataSource replaceItems:users];
+            NSMutableArray *online_list = [[NSMutableArray alloc] init];
+            // Check online user
+            for (id user_info in users){
+                NSLog(@"user info ");
+                if ([user_info isKindOfClass:[QBUUser class]])
+                {
+                    // It's an NSString, do something with it...
+                    QBUUser *user_obj = user_info;
+                    NSLog(@"user info %d", user_obj.ID);
+                    BOOL isOnline = [[QMCore instance].contactManager isUserOnlineWithID:user_obj.ID];
+                    NSLog(@"user is online %d", isOnline);
+                    if (isOnline){
+                         [online_list addObject:user_obj];
+                    }
+                    
+                }
+            }
+            [self.dataSource replaceItems:online_list];
             [self.tableView reloadData];
         } errorBlock:^(QBResponse *response) {
             // Handle error
         }];
+        */
         
     } errorBlock:^(QBResponse *response) {
         // error handling
@@ -239,19 +329,6 @@ QMUsersServiceDelegate
     }];
     
 
-    /*
-    QBGeneralResponsePage *page = [QBGeneralResponsePage responsePageWithCurrentPage:1 perPage:10];
-    
-    [QBRequest usersForPage:page successBlock:^(QBResponse *response, QBGeneralResponsePage *pageInformation, NSArray *users) {
-        // Successful response contains current page infromation + list of users
-        [self.dataSource_temp replaceItems:users];
-        [self.dataSource replaceItems:users];
-        [self.tableView reloadData];
-    } errorBlock:^(QBResponse *response) {
-        // Handle error
-    }];
-    
-     */
     NSLog(@"updateItemsFromContactList");
     //[self.dataSource replaceItems:friends];
 }

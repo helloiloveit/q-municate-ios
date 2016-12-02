@@ -465,12 +465,12 @@ NYTPhotosViewControllerDelegate
             case QMContactInteractionsSendMessage:
                 [self sendMessageAction];
                 break;
-                
+           
             case QMContactInteractionsAudioCall:
                 [tableView deselectRowAtIndexPath:indexPath animated:YES];
                 [self audioCallAction];
                 break;
-                
+               
             case QMContactInteractionsVideoCall:
                 [tableView deselectRowAtIndexPath:indexPath animated:YES];
                 [self videoCallAction];
