@@ -59,6 +59,46 @@ NSArray *pickerData;
     self.picker.delegate = self;
     
     self.navigationItem.rightBarButtonItem.enabled = YES;
+    
+    //check if user_data is existed
+    NSMutableDictionary *getRequest = [NSMutableDictionary dictionary];
+    
+    
+    NSString *id_info = [[NSString alloc] initWithFormat:@"%d", [QMCore instance].currentProfile.userData.ID];
+    
+    
+    [getRequest setObject:id_info forKey:@"user_id"];
+    
+    [QBRequest objectsWithClassName:@"User_data" extendedRequest:getRequest successBlock:^(QBResponse *response, NSArray *objects, QBResponsePage *page) {
+        // response processing
+//        QBCOCustomObject *obj = [objects objectAtIndex: 0];
+        if ([objects count] == 0)
+        {
+            QBCOCustomObject *object = [QBCOCustomObject customObject];
+            object.className = @"User_data"; // your Class name
+            
+            
+            // Object fields
+            [object.fields setObject:@"Vietnamese" forKey:@"My_Lang"];
+            [object.fields setObject:@9.1f forKey:@"rating"];
+            [object.fields setObject:@NO forKey:@"documentary"];
+            [object.fields setObject:@"fantasy" forKey:@"To_learn_lang"];
+            [object.fields setObject:@"Star Wars is an American epic space opera franchise consisting of a film series created by George Lucas." forKey:@"descriptions"];
+            
+            [QBRequest createObject:object successBlock:^(QBResponse *response, QBCOCustomObject *object) {
+                // do something when object is successfully created on a server
+            } errorBlock:^(QBResponse *response) {
+                // error handling
+                NSLog(@"Response error: %@", [response.error description]);
+            }];
+        }
+        
+    } errorBlock:^(QBResponse *response) {
+        // error handling
+        NSLog(@"Response error: %@", [response.error description]);
+    }];
+    
+    //end
 }
 
 - (void)viewDidAppear:(BOOL)animated {

@@ -56,6 +56,8 @@ QMUsersServiceDelegate
 @property (strong, nonatomic) QMContactsSearchDataSource *contactsSearchDataSource;
 @property (strong, nonatomic) QMGlobalSearchDataSource *globalSearchDataSource;
 
+@property (strong, nonatomic) UIActivityIndicatorView *indicator;
+
 @property (weak, nonatomic) BFTask *addUserTask;
 
 @end
@@ -92,6 +94,14 @@ QMUsersServiceDelegate
                                 action:@selector(updateContactsAndEndRefreshing)
                       forControlEvents:UIControlEventValueChanged];
     }
+    // add wait icon
+    self.indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    self.indicator.frame = CGRectMake(0.0, 0.0, 40.0, 40.0);
+    self.indicator.center = self.view.center;
+    [self.view addSubview:self.indicator];
+    [self.indicator bringSubviewToFront:self.view];
+    //[UIApplication sharedApplication].networkActivityIndicatorVisible = TRUE;
+    [self.indicator startAnimating];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -226,16 +236,21 @@ QMUsersServiceDelegate
     //Query for user with targeted language
     [QBRequest objectsWithClassName:@"User_data" extendedRequest:getRequest successBlock:^(QBResponse *response, NSArray *objects, QBResponsePage *page) {
         // response processing
+        if ([objects count]<=0)
+        {
+            return;
+        }
         QBCOCustomObject *obj = [objects objectAtIndex: 0];
         
         NSString *my_lang_info = obj.fields[@"To_learn_lang"];
-        filters[@"My_lang"] = my_lang_info;
+        //filters[@"My_lang"] = my_lang_info;
  
         // test with getRequest for specific language from user_data
-        [getRequest setObject:my_lang_info forKey:@"My_lang"];
-        [QBRequest objectsWithClassName:@"User_data" extendedRequest:getRequest successBlock:^(QBResponse *response, NSArray *objects, QBResponsePage *page) {
+        
+        NSMutableDictionary *lang_filter = [NSMutableDictionary dictionary];
+        [lang_filter setObject:my_lang_info forKey:@"My_Lang"];
+        [QBRequest objectsWithClassName:@"User_data" extendedRequest:lang_filter successBlock:^(QBResponse *response, NSArray *objects, QBResponsePage *page) {
             // response processing
-            NSLog(@"lalal");
             //now from user_data . get user obj
             for (id user_data_info in objects){
                 NSLog(@"user info ");
@@ -287,7 +302,6 @@ QMUsersServiceDelegate
             
             [self.dataSource replaceItems:online_list];
             [self.tableView reloadData];
-            
         } errorBlock:^(QBResponse *response) {
             // error handling
             NSLog(@"Response error: %@", [response.error description]);
@@ -296,33 +310,9 @@ QMUsersServiceDelegate
         
         /*
         
-        // Now query for user
-        [QBRequest usersWithExtendedRequest:filters page:[QBGeneralResponsePage responsePageWithCurrentPage:1 perPage:10] successBlock:^(QBResponse *response, QBGeneralResponsePage *page, NSArray *users) {
-            // Request succeeded
-            NSMutableArray *online_list = [[NSMutableArray alloc] init];
-            // Check online user
-            for (id user_info in users){
-                NSLog(@"user info ");
-                if ([user_info isKindOfClass:[QBUUser class]])
-                {
-                    // It's an NSString, do something with it...
-                    QBUUser *user_obj = user_info;
-                    NSLog(@"user info %d", user_obj.ID);
-                    BOOL isOnline = [[QMCore instance].contactManager isUserOnlineWithID:user_obj.ID];
-                    NSLog(@"user is online %d", isOnline);
-                    if (isOnline){
-                         [online_list addObject:user_obj];
-                    }
-                    
-                }
-            }
-            [self.dataSource replaceItems:online_list];
-            [self.tableView reloadData];
-        } errorBlock:^(QBResponse *response) {
-            // Handle error
-        }];
+
         */
-        
+        [self.indicator stopAnimating];
     } errorBlock:^(QBResponse *response) {
         // error handling
         NSLog(@"Response error: %@", [response.error description]);
@@ -330,7 +320,6 @@ QMUsersServiceDelegate
     
 
     NSLog(@"updateItemsFromContactList");
-    //[self.dataSource replaceItems:friends];
 }
 
 #pragma mark - UITableViewDelegate

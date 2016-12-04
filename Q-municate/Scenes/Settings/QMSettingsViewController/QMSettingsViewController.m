@@ -354,7 +354,7 @@ NYTPhotosViewControllerDelegate
                                                                          CGRectGetWidth(tableView.frame),
                                                                          kQMStatusSectionHeaderHeight)];
         headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        headerView.title = [NSLocalizedString(@"Your language", nil) uppercaseString];;
+        headerView.title = [NSLocalizedString(@"To learn", nil) uppercaseString];;
         
         return headerView;
     }

@@ -1,5 +1,5 @@
 //
-//  QMCallManager.m
+//  		
 //  Q-municate
 //
 //  Created by Vitaliy Gorbachov on 5/10/16.
