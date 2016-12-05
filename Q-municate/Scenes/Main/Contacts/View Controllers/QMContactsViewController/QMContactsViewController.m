@@ -253,12 +253,10 @@ QMUsersServiceDelegate
             // response processing
             //now from user_data . get user obj
             for (id user_data_info in objects){
-                NSLog(@"user info ");
                 if ([user_data_info isKindOfClass:[QBCOCustomObject class]])
                 {
                     // It's an NSString, do something with it...
                     QBCOCustomObject *user_obj = user_data_info;
-                    NSLog(@"user info %d", user_obj.userID);
                     // check online status
                     BOOL isOnline = [[QMCore instance].contactManager isUserOnlineWithID:user_obj.userID];
                     NSLog(@"user is online %d", isOnline);
@@ -267,14 +265,9 @@ QMUsersServiceDelegate
                         NSString *id_info = [[NSString alloc] initWithFormat:@"%d", user_obj.userID];
 
                         [user_id_list addObject:id_info];
-                        
-                        //[online_list addObject:user_obj];
                     }
-                    NSLog(@"test");
                 }
-                NSLog(@"test");
             }
-            
             //get user list
             for (id user_id in user_id_list)
             {

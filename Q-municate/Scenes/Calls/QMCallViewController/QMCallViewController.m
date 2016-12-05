@@ -395,6 +395,7 @@ QMCallManagerDelegate
             
             bottomText = [NSString stringWithFormat:@"%@ - %@", NSLocalizedString(@"QM_STR_CALL_WAS_STOPPED", nil) , QMStringForTimeInterval(self.callDuration)];
             
+            
             [[QMCore instance].callManager sendCallNotificationMessageWithState:QMCallNotificationStateHangUp duration:self.callDuration];
         }
         else {
@@ -538,6 +539,40 @@ QMCallManagerDelegate
         
         self.callInfoView.bottomText = QMStringForTimeInterval(self.callDuration);
     }
+    //Add the drop call here
+    if (self.callDuration > 60)
+    {
+        [self updateBarsVisibilityForceShow:YES];
+        [self stopCallTimer];
+        [self stopHideBarsTimer];
+        
+        NSString *bottomText = nil;
+        if (self.callState == QMCallStateActiveAudioCall ||
+            self.callState == QMCallStateActiveVideoCall) {
+            
+            bottomText = [NSString stringWithFormat:@"%@ - %@", NSLocalizedString(@"QM_STR_TIME_IS_OVER_1MINUTE_CALL_WAS_STOPPED", nil) , QMStringForTimeInterval(self.callDuration)];
+            
+        
+            
+            [[QMCore instance].callManager sendCallNotificationMessageWithState:QMCallNotificationStateHangUp duration:self.callDuration];
+        }
+        else {
+            
+            bottomText = NSLocalizedString(@"QM_STR_CALL_WAS_STOPPED", nil);
+        }
+        
+        if (self.callState == QMCallStateOutgoingAudioCall
+            || self.callState == QMCallStateOutgoingVideoCall) {
+            
+            [[QMCore instance].callManager sendCallNotificationMessageWithState:QMCallNotificationStateMissedNoAnswer duration:0];
+        }
+        
+        self.callInfoView.bottomText = bottomText;
+        
+        [self.session hangUp:nil];
+    }
+    //end
+    
 }
 
 - (void)startCallTimer {

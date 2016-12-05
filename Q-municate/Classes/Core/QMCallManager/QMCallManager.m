@@ -92,6 +92,7 @@ QBRTCClientDelegate
         
         [QMNotification sendPushNotificationToUser:opponentUser withText:pushText];
         
+        
         [self prepareCallWindow];
         self.callWindow.rootViewController = [QMCallViewController callControllerWithState:callState];
         [self.session startCall:nil];
