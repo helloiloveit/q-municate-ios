@@ -27,9 +27,11 @@ static const CGFloat kQMStatusSectionHeaderHeight = 40.0f;
 typedef NS_ENUM(NSUInteger, QMSettingsSection) {
     
     QMSettingsSectionFullName,
-    QMSettingsSectionStatus,
+    QMSettingsSectionOption,
     QMSettingsSectionTargetLanguage,
+    QMSettingsSectionStatus,
     QMSettingsSectionMyLanguage,
+    QMSettingsSectionStatistic,
     QMSettingsSectionUserInfo,
     QMSettingsSectionExtra,
     QMSettingsSectionSocial,
@@ -41,6 +43,12 @@ typedef NS_ENUM(NSUInteger, QMUserInfoSection) {
     QMUserInfoSectionPhone,
     QMUserInfoSectionEmail,
     QMUserInfoSectionChangePassword
+};
+
+typedef NS_ENUM(NSUInteger, QMUserStatSection) {
+    
+    QMUserInfoTeach,
+    QMUserInfoLearn
 };
 
 typedef NS_ENUM(NSUInteger, QMSocialSection) {
@@ -68,6 +76,7 @@ NYTPhotosViewControllerDelegate
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 @property (weak, nonatomic) IBOutlet UILabel *languageLabel;
 @property (weak, nonatomic) IBOutlet UILabel *myLanguageLabel;
+@property (weak, nonatomic) IBOutlet UILabel *myStatistic;
 
 
 @property (weak, nonatomic) BFTask *subscribeTask;
@@ -119,7 +128,7 @@ NYTPhotosViewControllerDelegate
     NSMutableDictionary *getRequest = [NSMutableDictionary dictionary];
     [getRequest setObject:@"19812866" forKey:@"user_id"];
     
-    
+    // Update infor of language when app start
     [QBRequest objectsWithClassName:@"User_data" extendedRequest:getRequest successBlock:^(QBResponse *response, NSArray *objects, QBResponsePage *page) {
         // response processing
         QBCOCustomObject *obj = [objects objectAtIndex: 0];
@@ -283,7 +292,24 @@ NYTPhotosViewControllerDelegate
         case QMSettingsSectionMyLanguage:
             [self performSegueWithIdentifier:kQMSceneSegueUpdateUser sender:@(QMUpdateUserFieldMyLanguage)];
             break;
-        
+            
+        case QMSettingsSectionStatistic:
+            
+            switch (indexPath.row) {
+                    
+                case QMUserInfoTeach:
+                    break;
+                    
+                case QMUserInfoLearn:
+                    [self performSegueWithIdentifier:kQMSceneSegueUpdateUser sender:@(QMUpdateUserFieldEmail)];
+                    break;
+            }
+            
+            break;
+            //[self performSegueWithIdentifier:kQMSceneSegueUpdateUser sender:@(QMUpdateUserFieldMyLanguage)];
+            
+            break;
+            
         case QMSettingsSectionUserInfo:
             
             switch (indexPath.row) {
@@ -342,7 +368,19 @@ NYTPhotosViewControllerDelegate
                                                                          CGRectGetWidth(tableView.frame),
                                                                          kQMStatusSectionHeaderHeight)];
         headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        headerView.title = [NSLocalizedString(@"QM_STR_STATUS", nil) uppercaseString];;
+        headerView.title = [NSLocalizedString(@"Level", nil) uppercaseString];;
+        
+        return headerView;
+    }
+    if (section == QMSettingsSectionOption) {
+        
+        QMTableSectionHeaderView *headerView = [[QMTableSectionHeaderView alloc]
+                                                initWithFrame:CGRectMake(0,
+                                                                         0,
+                                                                         CGRectGetWidth(tableView.frame),
+                                                                         kQMStatusSectionHeaderHeight)];
+        headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        headerView.title = [NSLocalizedString(@"Option", nil) uppercaseString];;
         
         return headerView;
     }
@@ -370,6 +408,19 @@ NYTPhotosViewControllerDelegate
         
         return headerView;
     }
+    if (section == QMSettingsSectionStatistic) {
+        
+        QMTableSectionHeaderView *headerView = [[QMTableSectionHeaderView alloc]
+                                                initWithFrame:CGRectMake(0,
+                                                                         0,
+                                                                         CGRectGetWidth(tableView.frame),
+                                                                         kQMStatusSectionHeaderHeight)];
+        headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        headerView.title = [NSLocalizedString(@"Statistic", nil) uppercaseString];;
+        
+        return headerView;
+    }
+    
     return [super tableView:tableView viewForHeaderInSection:section];
 }
 
@@ -384,6 +435,10 @@ NYTPhotosViewControllerDelegate
         
         return kQMStatusSectionHeaderHeight;
     }
+    if (section == QMSettingsSectionOption) {
+        
+        return kQMStatusSectionHeaderHeight;
+    }
     if (section == QMSettingsSectionTargetLanguage) {
         
         return kQMStatusSectionHeaderHeight;
@@ -392,7 +447,10 @@ NYTPhotosViewControllerDelegate
         
         return kQMStatusSectionHeaderHeight;
     }
-    
+    if (section == QMSettingsSectionStatistic) {
+        
+        return kQMStatusSectionHeaderHeight;
+    }
     return kQMDefaultSectionHeaderHeight;
 }
 
