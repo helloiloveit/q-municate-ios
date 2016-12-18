@@ -76,7 +76,12 @@ NYTPhotosViewControllerDelegate
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 @property (weak, nonatomic) IBOutlet UILabel *languageLabel;
 @property (weak, nonatomic) IBOutlet UILabel *myLanguageLabel;
-@property (weak, nonatomic) IBOutlet UILabel *myStatistic;
+@property (weak, nonatomic) IBOutlet UILabel *teachCount;
+@property (weak, nonatomic) IBOutlet UILabel *learnCount;
+
+@property (weak, nonatomic) IBOutlet UISegmentedControl *segControlForOption;
+
+- (IBAction)segOptionTapped:(id)sender;
 
 
 @property (weak, nonatomic) BFTask *subscribeTask;
@@ -137,6 +142,9 @@ NYTPhotosViewControllerDelegate
         // to cast to new object type to get data
         self.languageLabel.text = temp[@"To_learn_lang"];
         self.myLanguageLabel.text = temp[@"My_Lang"];
+        
+        self.teachCount.text = temp[@"Teach_Count"];
+        self.learnCount.text = temp[@"Learn_Count"];
         
     } errorBlock:^(QBResponse *response) {
         // error handling
@@ -261,6 +269,7 @@ NYTPhotosViewControllerDelegate
     
     [self presentViewController:alertController animated:YES completion:nil];
 }
+
 
 #pragma mark - UITableViewDelegate
 
@@ -605,4 +614,96 @@ NYTPhotosViewControllerDelegate
     return YES;
 }
 
+
+- (IBAction)segOptionTapped:(id)sender {
+    if(_segControlForOption.selectedSegmentIndex==0){
+        NSLog(@"Set Mode To Learn");
+        // save to db
+        NSMutableDictionary *getRequest = [NSMutableDictionary dictionary];
+        //NSInteger *id_info = [QMCore instance].currentProfile.userData.ID;
+        
+        NSString *id_info = [[NSString alloc] initWithFormat:@"%d", [QMCore instance].currentProfile.userData.ID];
+        
+        
+        [getRequest setObject:id_info forKey:@"user_id"];
+        
+        [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+        
+        __weak UINavigationController *navigationController = self.navigationController;
+        @weakify(self);
+        [QBRequest objectsWithClassName:@"User_data" extendedRequest:getRequest successBlock:^(QBResponse *response, NSArray *objects, QBResponsePage *page) {
+            // response processing
+            QBCOCustomObject *obj = [objects objectAtIndex: 0];
+            
+            QBCOCustomObject *object = [QBCOCustomObject customObject];
+            object.className = @"User_data";
+            [object.fields setObject:@0 forKey:@"Operate_Mode"];
+            object.ID = obj.ID;
+            
+            
+            [QBRequest updateObject:object successBlock:^(QBResponse *response, QBCOCustomObject *object) {
+                // object updated
+            } errorBlock:^(QBResponse *response) {
+                // error handling
+                NSLog(@"Response error: %@", [response.error description]);
+            }];
+            
+            @strongify(self);
+            [navigationController dismissNotificationPanel];
+            
+            [self.navigationController popViewControllerAnimated:YES];
+            
+            
+        } errorBlock:^(QBResponse *response) {
+            // error handling
+            NSLog(@"Response error: %@", [response.error description]);
+        }];
+
+        
+    }
+    else if(_segControlForOption.selectedSegmentIndex==1){
+         NSLog(@"Set Mode To Teach");
+        // save to db
+        NSMutableDictionary *getRequest = [NSMutableDictionary dictionary];
+        //NSInteger *id_info = [QMCore instance].currentProfile.userData.ID;
+        
+        NSString *id_info = [[NSString alloc] initWithFormat:@"%d", [QMCore instance].currentProfile.userData.ID];
+        
+        
+        [getRequest setObject:id_info forKey:@"user_id"];
+        
+        [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+        
+        __weak UINavigationController *navigationController = self.navigationController;
+        @weakify(self);
+        [QBRequest objectsWithClassName:@"User_data" extendedRequest:getRequest successBlock:^(QBResponse *response, NSArray *objects, QBResponsePage *page) {
+            // response processing
+            QBCOCustomObject *obj = [objects objectAtIndex: 0];
+            
+            QBCOCustomObject *object = [QBCOCustomObject customObject];
+            object.className = @"User_data";
+            [object.fields setObject:@1 forKey:@"Operate_Mode"];
+            object.ID = obj.ID;
+            
+            
+            [QBRequest updateObject:object successBlock:^(QBResponse *response, QBCOCustomObject *object) {
+                // object updated
+            } errorBlock:^(QBResponse *response) {
+                // error handling
+                NSLog(@"Response error: %@", [response.error description]);
+            }];
+            
+            @strongify(self);
+            [navigationController dismissNotificationPanel];
+            
+            [self.navigationController popViewControllerAnimated:YES];
+            
+            
+        } errorBlock:^(QBResponse *response) {
+            // error handling
+            NSLog(@"Response error: %@", [response.error description]);
+        }];
+
+    }
+}
 @end

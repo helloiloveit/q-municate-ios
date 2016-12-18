@@ -540,7 +540,7 @@ QMCallManagerDelegate
         self.callInfoView.bottomText = QMStringForTimeInterval(self.callDuration);
     }
     //Add the drop call here
-    if (self.callDuration > 60)
+    if (self.callDuration > 6)
     {
         [self updateBarsVisibilityForceShow:YES];
         [self stopCallTimer];
@@ -572,7 +572,65 @@ QMCallManagerDelegate
         [self.session hangUp:nil];
     }
     //end
+    // Update database of Learn_Count or Teach_Count
+    // Check if learn or teach mode.. update
+
+    //
+    NSMutableDictionary *getRequest = [NSMutableDictionary dictionary];
+    //NSInteger *id_info = [QMCore instance].currentProfile.userData.ID;
     
+    NSString *id_info = [[NSString alloc] initWithFormat:@"%d", [QMCore instance].currentProfile.userData.ID];
+    
+    
+    [getRequest setObject:id_info forKey:@"user_id"];
+    
+
+    
+    __weak UINavigationController *navigationController = self.navigationController;
+    @weakify(self);
+    [QBRequest objectsWithClassName:@"User_data" extendedRequest:getRequest successBlock:^(QBResponse *response, NSArray *objects, QBResponsePage *page) {
+        // response processing
+        QBCOCustomObject *obj = [objects objectAtIndex: 0];
+        NSDictionary *temp = obj.fields;
+        NSInteger *temp_count;
+        //check the Learn or Teach Mode
+        QBCOCustomObject *object = [QBCOCustomObject customObject];
+        object.className = @"User_data";
+        
+        if (temp[@"Operate_Mode"] == 0)
+        {
+            NSLog(@"learn mode");
+            
+            
+            [object.fields setObject:temp[@"Learn_Count"] forKey:@"Learn_Count"];
+        }
+        else if(temp[@"Operate_Mode"] == 1)
+        {
+            [object.fields setObject:temp[@"Teach_Count"]  forKey:@"Teach_Count"];
+        }
+  
+        object.ID = obj.ID;
+        
+        
+        [QBRequest updateObject:object successBlock:^(QBResponse *response, QBCOCustomObject *object) {
+            // object updated
+        } errorBlock:^(QBResponse *response) {
+            // error handling
+            NSLog(@"Response error: %@", [response.error description]);
+        }];
+        
+        @strongify(self);
+
+        
+        [self.navigationController popViewControllerAnimated:YES];
+        
+        
+    } errorBlock:^(QBResponse *response) {
+        // error handling
+        NSLog(@"Response error: %@", [response.error description]);
+    }];
+
+    //end
 }
 
 - (void)startCallTimer {
