@@ -575,7 +575,7 @@ QMCallManagerDelegate
     // Update database of Learn_Count or Teach_Count
     // Check if learn or teach mode.. update
 
-    //
+    // Might need to move it inside Duration check 
     NSMutableDictionary *getRequest = [NSMutableDictionary dictionary];
     //NSInteger *id_info = [QMCore instance].currentProfile.userData.ID;
     

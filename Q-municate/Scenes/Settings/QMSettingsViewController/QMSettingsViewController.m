@@ -142,9 +142,24 @@ NYTPhotosViewControllerDelegate
         // to cast to new object type to get data
         self.languageLabel.text = temp[@"To_learn_lang"];
         self.myLanguageLabel.text = temp[@"My_Lang"];
-        
-        self.teachCount.text = temp[@"Teach_Count"];
-        self.learnCount.text = temp[@"Learn_Count"];
+        //Teach
+        if ([temp[@"Teach_Count"] length] != 0)
+        {
+            self.teachCount.text = temp[@"Teach_Count"];
+        }
+        else
+        {
+            self.teachCount.text = @"Teach: 0";
+        }
+        //Learn
+        if ([temp[@"Learn_Count"] length] != 0)
+        {
+            self.learnCount.text = temp[@"Learn_Count"];
+        }
+        else
+        {
+            self.learnCount.text = @"Learn: 0";
+        }
         
     } errorBlock:^(QBResponse *response) {
         // error handling
