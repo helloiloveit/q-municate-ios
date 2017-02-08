@@ -128,10 +128,35 @@ NYTPhotosViewControllerDelegate
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    //update first record
+    /*
+    QBCOCustomObject *object = [QBCOCustomObject customObject];
+    object.className = @"User_data"; // your Class name
+    
+    
+    // Object fields
+    [object.fields setObject:@"Vietnamese" forKey:@"My_Lang"];
+    [object.fields setObject:@9.1f forKey:@"rating"];
+    [object.fields setObject:@NO forKey:@"documentary"];
+    [object.fields setObject:@"fantasy" forKey:@"To_learn_lang"];
+    [object.fields setObject:@"Star Wars is an American epic space opera franchise consisting of a film series created by George Lucas." forKey:@"descriptions"];
+    
+    [QBRequest createObject:object successBlock:^(QBResponse *response, QBCOCustomObject *object) {
+        // do something when object is successfully created on a server
+    } errorBlock:^(QBResponse *response) {
+        // error handling
+        NSLog(@"Response error: %@", [response.error description]);
+    }];
+    // end
+     */
+    
     
     // Update data that is not in profile
     NSMutableDictionary *getRequest = [NSMutableDictionary dictionary];
-    [getRequest setObject:@"19812866" forKey:@"user_id"];
+    NSString *id_info = [[NSString alloc] initWithFormat:@"%d", [QMCore instance].currentProfile.userData.ID];
+    [getRequest setObject:id_info forKey:@"user_id"];
+
+    
     
     // Update infor of language when app start
     [QBRequest objectsWithClassName:@"User_data" extendedRequest:getRequest successBlock:^(QBResponse *response, NSArray *objects, QBResponsePage *page) {
