@@ -289,6 +289,8 @@ QMUsersServiceDelegate
                     
                 } errorBlock:^(QBResponse *response) {
                     // Handle error here
+                    NSLog(@" Error getting user");
+
                 }];
                 
             }            

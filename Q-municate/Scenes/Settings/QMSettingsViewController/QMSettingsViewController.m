@@ -149,18 +149,41 @@ NYTPhotosViewControllerDelegate
     }];
     // end
      */
+     
     
     
     // Update data that is not in profile
     NSMutableDictionary *getRequest = [NSMutableDictionary dictionary];
     NSString *id_info = [[NSString alloc] initWithFormat:@"%d", [QMCore instance].currentProfile.userData.ID];
     [getRequest setObject:id_info forKey:@"user_id"];
-
+     //[getRequest setObject:@"23762657" forKey:@"user_id"];
+    // need to figure out why id_info is not correct
     
     
     // Update infor of language when app start
     [QBRequest objectsWithClassName:@"User_data" extendedRequest:getRequest successBlock:^(QBResponse *response, NSArray *objects, QBResponsePage *page) {
         // response processing
+        if ([objects count] ==0 )
+        {
+            NSLog(@" no element . Need to create first ");
+            /*
+            QBCOCustomObject *object = [QBCOCustomObject customObject];
+            object.className = @"User_data"; // your Class name
+            
+            
+            // Object fields
+            [object.fields setObject:@"Vietnamese" forKey:@"My_Lang"];
+            [object.fields setObject:@"fantasy" forKey:@"To_learn_lang"];
+            
+            [QBRequest createObject:object successBlock:^(QBResponse *response, QBCOCustomObject *object) {
+                // do something when object is successfully created on a server
+                
+            } errorBlock:^(QBResponse *response) {
+                // error handling
+                NSLog(@"Response error: %@", [response.error description]);
+            }];
+            */
+        }
         QBCOCustomObject *obj = [objects objectAtIndex: 0];
         NSLog(@"print value %@",obj.fields[@"My_lang"]);
         NSDictionary *temp = obj.fields;
