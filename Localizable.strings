@@ -154,6 +154,10 @@
 "QM_STR_PASSWORD_DESCRIPTION" = "Text, numeric or symbolic field.\n8-40 characters.\nMandatory.";
 "QM_STR_WRONG_OLD_PASSWORD" = "Wrong old password";
 "QM_STR_PASSWORD_DONT_MATCH" = "Passwords don't match";
+// *********** Setting window ********
+"QM_STR_TO_LEARN_LANG" = "Language i want to learn ";
+"QM_STR_LANG_LEVEL" = "My language level";
+"QM_STR_MY_NATIVE_LANG" = "My native langauge";
 
 // *********** Calls ***********
 "QM_STR_CALL" = "Call";

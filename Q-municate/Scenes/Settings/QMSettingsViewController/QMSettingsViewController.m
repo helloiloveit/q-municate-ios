@@ -373,7 +373,6 @@ NYTPhotosViewControllerDelegate
                     break;
                     
                 case QMUserInfoLearn:
-                    [self performSegueWithIdentifier:kQMSceneSegueUpdateUser sender:@(QMUpdateUserFieldEmail)];
                     break;
             }
             
@@ -428,6 +427,17 @@ NYTPhotosViewControllerDelegate
             [self logout];
             break;
     }
+}
+
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    // rows in section 0 should not be selectable
+    if ( indexPath.section == 5 ) return nil;
+    
+    // first 3 rows in any section should not be selectable
+   // if ( indexPath.row <= 2 ) return nil;
+    
+    // By default, allow row to be selected
+    return indexPath;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {

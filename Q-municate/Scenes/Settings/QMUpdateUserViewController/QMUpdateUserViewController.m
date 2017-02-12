@@ -153,7 +153,8 @@ NSArray *pickerData;
             [self configureWithKeyPath:@keypath(QBUUser.new, status)
                                  title:NSLocalizedString(@"QM_STR_STATUS", nil)
                                   text:currentUser.status
-                            bottomText:NSLocalizedString(@"QM_STR_STATUS_DESCRIPTION", nil)];
+                            //bottomText:NSLocalizedString(@"QM_STR_STATUS_DESCRIPTION", nil)];
+                            bottomText:NSLocalizedString(@"QM_STR_LANG_LEVEL", nil)];
             pickerData = @[@"Beginner",@"Intermediate", @"Fluent"];
             break;
             
@@ -162,7 +163,7 @@ NSArray *pickerData;
             [self configureWithKeyPath:@keypath(QBUUser.new, status)
                                  title:NSLocalizedString(@"QM_STR_STATUS", nil)
                                   text:currentUser.status
-                            bottomText:NSLocalizedString(@"QM_STR_STATUS_DESCRIPTION", nil)];
+                            bottomText:NSLocalizedString(@"QM_STR_TO_LEARN_LANG", nil)];
             pickerData = @[@"English",@"Vietnamese"];
             break;
         case QMUpdateUserFieldMyLanguage:
@@ -170,7 +171,7 @@ NSArray *pickerData;
             [self configureWithKeyPath:@keypath(QBUUser.new, status)
                                  title:NSLocalizedString(@"QM_STR_STATUS", nil)
                                   text:currentUser.status
-                            bottomText:NSLocalizedString(@"QM_STR_STATUS_DESCRIPTION", nil)];
+                            bottomText:NSLocalizedString(@"QM_STR_MY_NATIVE_LANG", nil)];
             pickerData = @[@"English",@"Vietnamese"];
             break;
         case QMUpdateUserFieldNone:
@@ -188,8 +189,7 @@ NSArray *pickerData;
     self.textField.placeholder = title;
     self.cachedValue =
     self.textField.text = text;
-    //self.bottomText = bottomText;
-    self.bottomText = @"Info about your language level";
+    self.bottomText = bottomText;
 }
 
 #pragma mark - Actions
