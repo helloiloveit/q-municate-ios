@@ -104,7 +104,7 @@ NSArray *pickerData;
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    [self.textField becomeFirstResponder];
+   // [self.textField becomeFirstResponder];
 }
 
 // The number of columns of data
