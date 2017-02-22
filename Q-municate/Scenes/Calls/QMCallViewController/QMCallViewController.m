@@ -540,7 +540,7 @@ QMCallManagerDelegate
         self.callInfoView.bottomText = QMStringForTimeInterval(self.callDuration);
     }
     //Add the drop call here
-    if (self.callDuration > 6)
+    if (self.callDuration > 3)
     {
         [self updateBarsVisibilityForceShow:YES];
         [self stopCallTimer];
@@ -596,19 +596,25 @@ QMCallManagerDelegate
         //check the Learn or Teach Mode
         QBCOCustomObject *object = [QBCOCustomObject customObject];
         object.className = @"User_data";
-        
-        if (temp[@"Operate_Mode"] == 0)
+        	
+        if ([temp[@"Operate_Mode"] longValue]== 0)
         {
             NSLog(@"learn mode");
             
+            temp_count = [temp[@"Learn_Count"] integerValue] + 1;
+             NSNumber *temp_count2 = [[NSNumber alloc]initWithInt:temp_count];
             
+            [temp setValue:temp_count2 forKey:@"Learn_Count"];
             [object.fields setObject:temp[@"Learn_Count"] forKey:@"Learn_Count"];
         }
-        else if(temp[@"Operate_Mode"] == 1)
+        else  if ([temp[@"Operate_Mode"] longValue]== 1)
         {
             [object.fields setObject:temp[@"Teach_Count"]  forKey:@"Teach_Count"];
         }
-  
+        else
+        {
+            NSLog(@"Wrong value of Mode");
+        }
         object.ID = obj.ID;
         
         

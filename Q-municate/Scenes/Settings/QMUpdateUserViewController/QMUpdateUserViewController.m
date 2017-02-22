@@ -117,7 +117,10 @@ NSArray *pickerData;
 - (int)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
     return pickerData.count;
+    
 }
+
+
 
 // The data to return for the row and component (column) that's being passed in
 - (NSString*)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
@@ -178,6 +181,8 @@ NSArray *pickerData;
             break;
     }
 }
+
+
 
 - (void)configureWithKeyPath:(NSString *)keyPath
                        title:(NSString *)title

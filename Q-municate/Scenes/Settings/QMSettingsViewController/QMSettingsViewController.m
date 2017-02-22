@@ -129,17 +129,21 @@ NYTPhotosViewControllerDelegate
     [super viewWillAppear:animated];
     
     //update first record
-    /*
+    
     QBCOCustomObject *object = [QBCOCustomObject customObject];
     object.className = @"User_data"; // your Class name
     
-    
+    /*
     // Object fields
+    NSInteger temp = 0;
     [object.fields setObject:@"Vietnamese" forKey:@"My_Lang"];
-    [object.fields setObject:@9.1f forKey:@"rating"];
-    [object.fields setObject:@NO forKey:@"documentary"];
-    [object.fields setObject:@"fantasy" forKey:@"To_learn_lang"];
-    [object.fields setObject:@"Star Wars is an American epic space opera franchise consisting of a film series created by George Lucas." forKey:@"descriptions"];
+    [object.fields setObject:@"unknown" forKey:@"To_learn_lang"];
+    [object.fields setObject:@"unknown" forKey:@"My_Lang"];
+    [object.fields setObject:@"unknown" forKey:@"Level"];
+    [object.fields setObject:@"unknown" forKey:@"Operate_Mode"];
+    [object.fields setObject:@0 forKey:@"Teach_Count"];
+    [object.fields setObject:@0 forKey:@"Learn_Count"];
+    [object.fields setObject:@5.0f forKey:@"rating"];
     
     [QBRequest createObject:object successBlock:^(QBResponse *response, QBCOCustomObject *object) {
         // do something when object is successfully created on a server
@@ -148,7 +152,7 @@ NYTPhotosViewControllerDelegate
         NSLog(@"Response error: %@", [response.error description]);
     }];
     // end
-     */
+    */
      
     
     
@@ -191,16 +195,18 @@ NYTPhotosViewControllerDelegate
         self.languageLabel.text = temp[@"To_learn_lang"];
         self.myLanguageLabel.text = temp[@"My_Lang"];
         //Teach
-        if ([temp[@"Teach_Count"] length] != 0)
+           NSLog(@"test: %ld", [temp[@"Teach_Count"] longValue] );
+        if ([temp[@"Teach_Count"] longValue] != 0)
         {
-            self.teachCount.text = temp[@"Teach_Count"];
+            NSLog(@"test: %@", [temp[@"Teach_Count"] stringValue]);
+            self.teachCount.text = [temp[@"Teach_Count"] stringValue];
         }
         else
         {
             self.teachCount.text = @"Teach: 0";
         }
         //Learn
-        if ([temp[@"Learn_Count"] length] != 0)
+        if ([temp[@"Learn_Count"] longValue] != 0)
         {
             self.learnCount.text = temp[@"Learn_Count"];
         }
