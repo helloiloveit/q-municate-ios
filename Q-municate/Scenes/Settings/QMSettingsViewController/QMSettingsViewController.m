@@ -199,7 +199,8 @@ NYTPhotosViewControllerDelegate
         if ([temp[@"Teach_Count"] longValue] != 0)
         {
             NSLog(@"test: %@", [temp[@"Teach_Count"] stringValue]);
-            self.teachCount.text = [temp[@"Teach_Count"] stringValue];
+            NSString *someText = [NSString stringWithFormat: @"Teach: %ld", [temp[@"Teach_Count"] integerValue]];
+            self.teachCount.text = someText;
         }
         else
         {
@@ -208,7 +209,10 @@ NYTPhotosViewControllerDelegate
         //Learn
         if ([temp[@"Learn_Count"] longValue] != 0)
         {
-            self.learnCount.text = temp[@"Learn_Count"];
+            NSLog(@"test: %@", [temp[@"Learn_Count"] stringValue]);
+            NSString *someText = [NSString stringWithFormat: @"Learn: %ld", [temp[@"Learn_Count"] integerValue]];
+            self.learnCount.text = someText;
+
         }
         else
         {

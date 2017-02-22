@@ -602,7 +602,7 @@ QMCallManagerDelegate
             NSLog(@"learn mode");
             
             temp_count = [temp[@"Learn_Count"] integerValue] + 1;
-             NSNumber *temp_count2 = [[NSNumber alloc]initWithInt:temp_count];
+            NSNumber *temp_count2 = [[NSNumber alloc]initWithInt:temp_count];
             
             [temp setValue:temp_count2 forKey:@"Learn_Count"];
             [object.fields setObject:temp[@"Learn_Count"] forKey:@"Learn_Count"];
